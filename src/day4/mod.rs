@@ -119,7 +119,6 @@ pub mod part2 {
             };
             for i in (card_id + 1)..=(card_id + wins) {
                 let value: i32 = cards_hash.get(&i).copied().unwrap_or(1);
-                println!("n_cards : {n_cards} and value {value}");
                 cards_hash.insert(i, value + n_cards);
             }
             card_id += 1;
