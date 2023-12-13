@@ -110,16 +110,17 @@ pub mod part2 {
         let mut card_id = 1;
         for card in cards {
             let wins = wins_per_game(card);
-            let n_cards = match cards_hash.get(&card_id) {
-                Some(value) => *value ,
-                None => 0,
+            let n_cards: i32 = match cards_hash.get(&card_id) {
+                Some(value) => *value,
+                None => {
+                    cards_hash.insert(card_id, 1);
+                    1
+                }
             };
             for i in (card_id + 1)..=(card_id + wins) {
-                if let Some(&value) = cards_hash.get(&i) {
-                    cards_hash.insert(i, value + n_cards);
-                } else {
-                    cards_hash.insert(i, 2);
-                }
+                let value: i32 = cards_hash.get(&i).copied().unwrap_or(1);
+                println!("n_cards : {n_cards} and value {value}");
+                cards_hash.insert(i, value + n_cards);
             }
             card_id += 1;
         }
